@@ -1,0 +1,28 @@
+name: Update SHA in File
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  update_sha:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get current commit SHA
+        id: get_sha
+        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
+
+      - name: Get branch name
+        id: get_branch
+        run: echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
+
+      - name: Insert SHA into file
+        run: echo "${{ steps.get_sha.outputs.sha }}" > ${{ steps.get_branch.outputs.branch }}_sha_file.txt
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update SHA"
