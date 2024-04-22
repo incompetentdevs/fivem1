@@ -1,16 +1,26 @@
 fx_version "cerulean"
+
 game "gta5"
 
-author 'sprunk4 <admin@incompetent.dev>'
-description 'An awesome script'
-version "A totally real github repo version"
+author 'sprunk <sprunk@incompetent.dev>'
+description 'my second ever script, not my proudest work but its something!'
+version '1.0.0'
 
 client_scripts {
     "client.js",
+    "examples/example.js",
+    "examples/example.lua"
 }
 
 server_scripts {
     "server.js",
 }
 
-ui_page "http://161.129.181.14:6971/"
+ui_page 'out/index.html'
+
+files {
+    'out/index.html',
+    'out/*',
+    'out/**/*'
+}
+

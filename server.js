@@ -1,8 +1,6 @@
-// performs a http request to our API to let us know how many people are using this resource.
+const https = require('https');
 
-const http = require('http');
-
-function makeHttpRequest(url, method, data) {
+function makeHttpsRequest(url, method, data) {
     return new Promise((resolve, reject) => {
         const options = {
             method: method,
@@ -15,7 +13,7 @@ function makeHttpRequest(url, method, data) {
             options.body = JSON.stringify(data);
         }
 
-        const req = http.request(url, options, (res) => {
+        const req = https.request(url, options, (res) => {
             let responseData = '';
 
             res.on('data', (chunk) => {
@@ -35,10 +33,12 @@ function makeHttpRequest(url, method, data) {
     });
 }
 
-const url = 'http://161.129.181.14:2001/v1/fivem/resources/ping?resource=snotify';
-const method = 'GET';
+const url = 'https://api.incompetent.dev/v1/fivem/resources/ping?resource=snotify';
 
-makeHttpRequest(url, method)
+makeHttpsRequest(url, 'GET')
+    .then(response => {
+        console.log('Response:', response);
+    })
     .catch(error => {
-        // console.error('Error:', error);
+        console.error('Error:', error);
     });
